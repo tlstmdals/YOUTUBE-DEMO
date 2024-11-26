@@ -8,8 +8,36 @@ var id = 1 // 하나의 객체를 유티크하게 구별하기 위함
 
 //로그인
 app.post('/login',(req,res)=>{
+console.log(req.body)
 
+    const {userId, password} = req.body
+    var loginUser = {}
+    db.forEach(function(user, id){
+        if(user.userId===userId){
+            loginUser = user
+        }
+    })
+    // userid 값을 못찾았으면
+    if(isExist(loginUser)){
+        console.log("같은 거 찾았다")
+        hasUserId = true
+        if (loginUser.password === password){
+            console.log("패스워드도 같다")
+        } else{
+            console.log("패스워드 틀렸다")
+        }
+    }else{
+        console.log("없는 아이디 입니다")
+    }
 })
+
+function isExist(obj){
+    if(Object.keys(obj).length){
+        return false
+    }else{
+        return true
+    }
+}
 //회원가입
 app.post('/join',(req,res)=>{
     
